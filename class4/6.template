@@ -1,0 +1,24 @@
+Value NEIGHBOR ([0-9\.]+)
+Value REMOTE_AS (\S+)
+Value UP_DOWN (\S+)
+Value STATE_PREFIXRCVD (\S+)
+Value Filldown LOCAL_AS (\S+)
+Value Filldown BGP_ROUTER_ID (\S+)
+
+Start 
+  ^BGP router identifier ${BGP_ROUTER_ID}, local AS number ${LOCAL_AS}.*$$ -> Entriesheader
+
+Entriesheader
+  ^Neighbor.*PfxRcd\s*$$ -> Entries
+
+Entries
+  ^${NEIGHBOR}\s+\d+\s+${REMOTE_AS}(\s+\d+){5}\s+${UP_DOWN}\s+${STATE_PREFIXRCVD}.*$$ -> Record
+
+EOF
+
+#(\s+\d+){n} effectively skips n columns of digits
+
+#6. Parse the following 'show ip bgp summary' output (see link below). From this output, extract the following fields: Neighbor, Remote AS, Up_Down, and State_PrefixRcvd. Also include the Local AS and the BGP Router ID in each row of the tabular output (hint: use filldown for this). Note, in order to simplify this problem only worry about the data shown in the output (in other words, don't worry about all possible values that could be present in the output).
+#Second hint: remember there is an implicit 'EOF -> Record' at the end of the template (by default).
+#https://github.com/ktbyers/pyplus_course/blob/master/class4/exercises/ex6_show_ip_bgp_summary.txt
+
