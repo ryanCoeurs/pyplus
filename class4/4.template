@@ -1,0 +1,13 @@
+Value MAC_ADDRESS (\S+)
+Value ADDRESS (\S+)
+Value NAME (\S+)
+Value INTERFACE (\S+)
+
+Start 
+  ^MAC Address.*$$ -> Entries  
+
+Entries
+  ^${MAC_ADDRESS}\s+${ADDRESS}\s+${NAME}\s+${INTERFACE}.*$$ -> Record
+
+#4. Use TextFSM to parse the 'show arp' output from a Juniper SRX (see link below). Extract the following fields into tabular data: MAC Address, Address, Name, Interface.
+#https://github.com/ktbyers/pyplus_course/blob/master/class4/exercises/ex4_junos_show_arp.txt
