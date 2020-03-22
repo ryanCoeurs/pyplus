@@ -13,3 +13,9 @@ def create_backup(device):
     filename = f"{device.hostname}.txt"  
     with open(filename, "w") as f:
         f.write(config)
+
+def create_checkpoint(device):
+    config = device._get_checkpoint_file()
+    filename = f"{device.hostname}.txt"  
+    with open(filename, "w") as f:
+        f.write(config)
